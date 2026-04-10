@@ -38,6 +38,31 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
 
 
 
+
+/* BUDGET CATEGORIES */
+.budgets-wrap{background:linear-gradient(160deg,rgba(86,28,36,.5),rgba(42,13,16,.7));border:1px solid rgba(199,183,163,.25);border-radius:18px;padding:16px 18px;margin-bottom:16px;}
+.budgets-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.budgets-title{font-size:14px;font-weight:800;color:#E8D8C4;}
+.budget-items{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.budget-item{background:rgba(20,5,8,.35);border-radius:13px;padding:12px 14px;border:1px solid rgba(199,183,163,.1);transition:border-color .2s;}
+.budget-item:hover{border-color:rgba(199,183,163,.25);}
+.budget-item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.budget-cat-name{font-size:13px;font-weight:700;color:#E8D8C4;display:flex;align-items:center;gap:7px;}
+.budget-amounts{font-size:11px;color:#9a8878;display:flex;gap:6px;align-items:center;}
+.budget-spent{font-weight:700;color:#C7B7A3;}
+.budget-limit{color:#9a8878;}
+.budget-track{background:rgba(20,5,8,.5);border-radius:20px;height:9px;overflow:hidden;margin-bottom:5px;}
+.budget-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#6D2932,#C7B7A3);transition:width .8s ease;}
+.budget-fill.warn{background:linear-gradient(90deg,#7a3000,#ff9800);}
+.budget-fill.over{background:linear-gradient(90deg,#7a0000,#f44336);}
+.budget-foot{display:flex;justify-content:space-between;align-items:center;}
+.budget-pct{font-size:10px;font-weight:700;color:#C7B7A3;}
+.budget-remaining{font-size:10px;color:#9a8878;}
+.budget-remaining.over{color:#f44336;}
+.budget-add-form{background:rgba(20,5,8,.3);border-radius:12px;padding:12px;border:1px solid rgba(199,183,163,.15);display:none;margin-top:4px;}
+.budget-add-form.open{display:block;}
+.budget-empty{color:#9a8878;font-size:12px;text-align:center;padding:12px;opacity:.7;}
+
 /* STREAK */
 .streak-wrap{background:linear-gradient(160deg,rgba(86,28,36,.5),rgba(42,13,16,.7));border:1px solid rgba(199,183,163,.25);border-radius:18px;padding:16px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
 .streak-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(199,183,163,.08),transparent 70%);pointer-events:none;}
@@ -187,6 +212,31 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
 .pts-v{font-size:25.7px;font-weight:900;color:#C7B7A3;}
 .pts-l{font-size:13.5px;color:var(--gray);}
 .pts-lv{font-size:13.5px;font-weight:700;padding:3px 12px;border-radius:10px;background:rgba(109,41,50,.12);color:#E8D8C4;margin-right:auto;border:1px solid rgba(109,41,50,.2);}
+
+
+/* BUDGET CATEGORIES */
+.budgets-wrap{background:linear-gradient(160deg,rgba(86,28,36,.5),rgba(42,13,16,.7));border:1px solid rgba(199,183,163,.25);border-radius:18px;padding:16px 18px;margin-bottom:16px;}
+.budgets-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.budgets-title{font-size:14px;font-weight:800;color:#E8D8C4;}
+.budget-items{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.budget-item{background:rgba(20,5,8,.35);border-radius:13px;padding:12px 14px;border:1px solid rgba(199,183,163,.1);transition:border-color .2s;}
+.budget-item:hover{border-color:rgba(199,183,163,.25);}
+.budget-item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.budget-cat-name{font-size:13px;font-weight:700;color:#E8D8C4;display:flex;align-items:center;gap:7px;}
+.budget-amounts{font-size:11px;color:#9a8878;display:flex;gap:6px;align-items:center;}
+.budget-spent{font-weight:700;color:#C7B7A3;}
+.budget-limit{color:#9a8878;}
+.budget-track{background:rgba(20,5,8,.5);border-radius:20px;height:9px;overflow:hidden;margin-bottom:5px;}
+.budget-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#6D2932,#C7B7A3);transition:width .8s ease;}
+.budget-fill.warn{background:linear-gradient(90deg,#7a3000,#ff9800);}
+.budget-fill.over{background:linear-gradient(90deg,#7a0000,#f44336);}
+.budget-foot{display:flex;justify-content:space-between;align-items:center;}
+.budget-pct{font-size:10px;font-weight:700;color:#C7B7A3;}
+.budget-remaining{font-size:10px;color:#9a8878;}
+.budget-remaining.over{color:#f44336;}
+.budget-add-form{background:rgba(20,5,8,.3);border-radius:12px;padding:12px;border:1px solid rgba(199,183,163,.15);display:none;margin-top:4px;}
+.budget-add-form.open{display:block;}
+.budget-empty{color:#9a8878;font-size:12px;text-align:center;padding:12px;opacity:.7;}
 
 /* STREAK */
 .stk-bar{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px;}
@@ -561,6 +611,37 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
     <div class="sec-card"><div class="sech"><div class="sect">🛒 مصاريف متغيرة</div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="varT">٠ ﷼</span><button class="add-btn" onclick="tF('fV')">+ أضف</button></div></div><div class="items" id="varL"></div><div class="add-form" id="fV"><div class="form-row"><input class="fi" id="vN" placeholder="مثل: أكل، ملابس، قهوة..." type="text"><input class="fi" id="vA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="vC"><option value="🛒">🛒 بقالة</option><option value="🍽️">🍽️ مطاعم/قهوة</option><option value="👗">👗 ملابس</option><option value="💄">💄 عناية</option><option value="🎮">🎮 ترفيه</option><option value="✈️">✈️ سفريات</option><option value="🏥">🏥 صحة</option><option value="🎁">🎁 هدايا</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('var')">سجّل</button></div></div></div>
     <div class="sec-card"><div class="sech"><div class="sect">🎯 أهدافك المالية</div><button class="add-btn" onclick="tF('fG')">+ هدف جديد</button></div><div id="goalL"></div><div class="add-form" id="fG"><div class="form-row"><input class="fi" id="gN" placeholder="وش تبي توفر له؟" type="text"><input class="fi" id="gT" placeholder="المبلغ المستهدف" type="number" min="0"><input class="fi" id="gS" placeholder="كم وفرت لحد الآن" type="number" min="0"><select class="fs" id="gI"><option value="✈️">✈️ سفريات</option><option value="🚗">🚗 سيارة</option><option value="🏠">🏠 بيت</option><option value="💍">💍 زواج</option><option value="📱">📱 جهاز</option><option value="🎓">🎓 دراسة</option><option value="🆘">🆘 طوارئ</option><option value="⭐">⭐ غير ذلك</option></select><button class="fb2" onclick="addGoal()">سجّل</button></div></div></div>
   </div>
+
+  <!-- BUDGET CATEGORIES -->
+  <div class="budgets-wrap">
+    <div class="budgets-header">
+      <div class="budgets-title">🎯 ميزانية الفئات</div>
+      <button class="add-btn" onclick="tF('fBudget')">+ فئة جديدة</button>
+    </div>
+    <div class="budget-add-form" id="fBudget">
+      <div class="form-row">
+        <select class="fs" id="bcCat">
+          <option value="🍽️ مطاعم/قهوة">🍽️ مطاعم/قهوة</option>
+          <option value="🎮 ترفيه وطلعات">🎮 ترفيه وطلعات</option>
+          <option value="🛒 بقالة">🛒 بقالة</option>
+          <option value="👗 ملابس">👗 ملابس</option>
+          <option value="✈️ سفريات">✈️ سفريات</option>
+          <option value="🏥 صحة">🏥 صحة</option>
+          <option value="💄 عناية">💄 عناية</option>
+          <option value="🎁 هدايا">🎁 هدايا</option>
+          <option value="⛽ بنزين">⛽ بنزين</option>
+          <option value="📚 تعليم">📚 تعليم</option>
+        </select>
+        <input class="fi" id="bcName" placeholder="أو اكتب اسم فئة..." type="text">
+        <input class="fi" id="bcLimit" placeholder="الحد المسموح ﷼" type="number" min="0">
+        <button class="fb2" onclick="addBudgetCat()">سجّل</button>
+      </div>
+    </div>
+    <div class="budget-items" id="budgetItems">
+      <div class="budget-empty">ما عندك فئات بعد — أضف فئة وحدد ميزانيتها 💡</div>
+    </div>
+  </div>
+
   <div class="ach-sec"><div class="ach-title">🏆 وش اللي حققته؟</div><div class="ach-grid" id="achG"></div></div>
   <div class="daily-sec"><div class="sech" style="margin-bottom:11px"><div class="sect">📅 وش صرفت اليوم؟</div><div style="font-size:9px;color:var(--gray)">اضغط على اليوم وسجّل</div></div><div class="dgrid" id="dGrid"></div><div class="dlog" id="dLog" style="display:none"><div class="dlog-t" id="dLogT"></div><div class="dlog-entries" id="dLogE"></div><div class="form-row"><input class="fi" id="dlN" placeholder="وش صرفت على؟" type="text"><input class="fi" id="dlA" placeholder="المبلغ" type="number" min="0"><select class="fs" id="dlT"><option value="out">💸 صرفت</option><option value="in">💵 دخل</option></select><select class="fs" id="dlC"><option value="🛒">🛒 بقالة</option><option value="🍽️">🍽️ مطعم</option><option value="🚗">🚗 مواصلات</option><option value="💄">💄 عناية</option><option value="🎮">🎮 ترفيه</option><option value="🏥">🏥 صحة</option><option value="💡">💡 فواتير</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addDE()">سجّل</button></div></div></div>
   <div class="charts-grid">
@@ -764,7 +845,8 @@ function rPts(){
   var lv=lvs[0];for(var i=0;i<lvs.length;i++){if(pts>=lvs[i].min)lv=lvs[i];}
   document.getElementById('ptsLv').textContent=lv.name;
 }
-function nextTip(){ti=(ti+1)%TIPS.length;document.getElementById('tipT').textContent=TIPS[ti];}
+function nextTip(){ti=(ti+1)%TIPS.length;document.getElementById('tipT').textContent=TIPS[ti];
+  renderBudgets();}
 function clearSrch(){document.getElementById('srchI').value='';doSearch('');}
 function doSearch(q){
   var r=document.getElementById('srchR');
@@ -855,6 +937,7 @@ function render(){
   document.getElementById('mLbl').textContent=MN[cm]+' '+cy;
   rSum();rFc();rStk();rLists();rDGrid();rDL();rCharts();rAI();rAchs();rPts();
   document.getElementById('tipT').textContent=TIPS[ti];
+  renderBudgets();
   buildYearBtns();
 }
 
@@ -1144,6 +1227,101 @@ document.addEventListener('visibilitychange',function(){if(document.hidden)saveD
 document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.key==='s'){e.preventDefault();saveData();}if(e.key==='Escape')closeQuick();});
 document.getElementById('qModal').addEventListener('click',function(e){if(e.target===this)closeQuick();});
 
+
+
+
+// ===== BUDGET CATEGORIES =====
+function getBudgets(){
+  var m = im(cy, cm);
+  if(!m.budgets) m.budgets = [];
+  return m.budgets;
+}
+
+function addBudgetCat(){
+  var sel  = document.getElementById('bcCat').value;
+  var name = document.getElementById('bcName').value.trim();
+  var lim  = parseFloat(document.getElementById('bcLimit').value) || 0;
+  var catName = name || sel;
+  if(!catName || !lim){ toast('اكتب اسم الفئة والمبلغ ⚠️','warn'); return; }
+  var budgets = getBudgets();
+  // Check duplicate
+  if(budgets.some(function(b){ return b.name === catName; })){
+    toast('هذي الفئة موجودة بالفعل','warn'); return;
+  }
+  budgets.push({ id: Date.now(), name: catName, limit: lim });
+  document.getElementById('bcName').value = '';
+  document.getElementById('bcLimit').value = '';
+  document.getElementById('fBudget').classList.remove('open');
+  addPts(10);
+  renderBudgets();
+  toast('تمت إضافة الفئة ✅','success');
+}
+
+function delBudgetCat(id){
+  var m = im(cy, cm);
+  if(!m.budgets) return;
+  m.budgets = m.budgets.filter(function(b){ return b.id !== id; });
+  renderBudgets();
+}
+
+function getSpentInCat(catName){
+  // Sum all variable expenses + daily entries matching this category keyword
+  var m   = im(cy, cm);
+  var key = catName.replace(/^[^؀-ۿ\w]*/, '').trim(); // strip emoji
+  var spent = 0;
+  // From variable expenses
+  m.variable.forEach(function(x){
+    if(x.cat && catName.indexOf(x.cat) >= 0) spent += x.amt;
+    else if(x.name && x.name.indexOf(key) >= 0) spent += x.amt;
+  });
+  // From daily entries
+  Object.values(m.daily || {}).forEach(function(arr){
+    arr.forEach(function(e){
+      if(e.type === 'out'){
+        if(e.cat && catName.indexOf(e.cat) >= 0) spent += e.amt;
+        else if(e.name && e.name.indexOf(key) >= 0) spent += e.amt;
+      }
+    });
+  });
+  return spent;
+}
+
+function renderBudgets(){
+  var budgets = getBudgets();
+  var el = document.getElementById('budgetItems');
+  if(!el) return;
+  if(!budgets.length){
+    el.innerHTML = '<div class="budget-empty">ما عندك فئات بعد — أضف فئة وحدد ميزانيتها 💡</div>';
+    return;
+  }
+  var h = '';
+  budgets.forEach(function(b){
+    var spent   = getSpentInCat(b.name);
+    var pct     = b.limit ? Math.min(Math.round((spent/b.limit)*100), 100) : 0;
+    var remain  = b.limit - spent;
+    var cls     = pct >= 100 ? 'over' : pct >= 80 ? 'warn' : '';
+    var fillCls = 'budget-fill' + (cls ? ' '+cls : '');
+    var remTxt  = remain >= 0
+      ? 'باقي: ' + fmt(remain) + ' ﷼'
+      : 'تجاوزت بـ ' + fmt(Math.abs(remain)) + ' ﷼';
+    var emoji   = pct >= 100 ? '🚨' : pct >= 80 ? '⚠️' : '✅';
+    h += '<div class="budget-item">';
+    h += '<div class="budget-item-head">';
+    h +=   '<div class="budget-cat-name">' + emoji + ' ' + b.name + '</div>';
+    h +=   '<div style="display:flex;gap:8px;align-items:center">';
+    h +=     '<div class="budget-amounts"><span class="budget-spent">' + fmt(spent) + '</span><span class="budget-limit"> / ' + fmt(b.limit) + ' ﷼</span></div>';
+    h +=     '<button class="item-del" onclick="delBudgetCat('+b.id+')">✕</button>';
+    h +=   '</div>';
+    h += '</div>';
+    h += '<div class="budget-track"><div class="'+fillCls+'" style="width:'+pct+'%"></div></div>';
+    h += '<div class="budget-foot">';
+    h +=   '<div class="budget-pct">' + pct + '%</div>';
+    h +=   '<div class="budget-remaining' + (remain<0?' over':'') + '">' + remTxt + '</div>';
+    h += '</div>';
+    h += '</div>';
+  });
+  el.innerHTML = h;
+}
 
 
 // ===== STREAK SYSTEM =====
