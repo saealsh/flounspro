@@ -39,6 +39,20 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
 
 
 
+
+/* BUDGET ALERTS */
+.budget-alert-banner{
+  background:linear-gradient(135deg,rgba(120,0,0,.6),rgba(42,13,16,.8));
+  border:1px solid rgba(244,67,54,.5);border-radius:14px;
+  padding:12px 16px;margin-bottom:14px;
+  display:none;flex-direction:column;gap:8px;
+}
+.budget-alert-banner.show{display:flex;}
+.budget-alert-item{display:flex;align-items:center;gap:10px;font-size:12px;color:#ffcdd2;}
+.budget-alert-icon{font-size:18px;flex-shrink:0;}
+.budget-alert-text{flex:1;line-height:1.5;}
+.budget-alert-text b{color:#ff6b6b;display:block;}
+
 /* BUDGET CATEGORIES */
 .budgets-wrap{background:linear-gradient(160deg,rgba(86,28,36,.5),rgba(42,13,16,.7));border:1px solid rgba(199,183,163,.25);border-radius:18px;padding:16px 18px;margin-bottom:16px;}
 .budgets-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
@@ -213,6 +227,20 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
 .pts-l{font-size:13.5px;color:var(--gray);}
 .pts-lv{font-size:13.5px;font-weight:700;padding:3px 12px;border-radius:10px;background:rgba(109,41,50,.12);color:#E8D8C4;margin-right:auto;border:1px solid rgba(109,41,50,.2);}
 
+
+
+/* BUDGET ALERTS */
+.budget-alert-banner{
+  background:linear-gradient(135deg,rgba(120,0,0,.6),rgba(42,13,16,.8));
+  border:1px solid rgba(244,67,54,.5);border-radius:14px;
+  padding:12px 16px;margin-bottom:14px;
+  display:none;flex-direction:column;gap:8px;
+}
+.budget-alert-banner.show{display:flex;}
+.budget-alert-item{display:flex;align-items:center;gap:10px;font-size:12px;color:#ffcdd2;}
+.budget-alert-icon{font-size:18px;flex-shrink:0;}
+.budget-alert-text{flex:1;line-height:1.5;}
+.budget-alert-text b{color:#ff6b6b;display:block;}
 
 /* BUDGET CATEGORIES */
 .budgets-wrap{background:linear-gradient(160deg,rgba(86,28,36,.5),rgba(42,13,16,.7));border:1px solid rgba(199,183,163,.25);border-radius:18px;padding:16px 18px;margin-bottom:16px;}
@@ -557,7 +585,7 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
   <div class="salary-card">
     <div class="salary-icon">💰</div>
     <div class="salary-info">
-      <div class="salary-title">يوم نزول الراتب</div>
+      <div><div class="salary-title">يوم نزول الراتب</div><div class="sect-sub" style="color:#9a8878;font-size:10px;margin-top:2px;">حدد اليوم اللي ينزل فيه راتبك ونذكّرك كم باقي</div></div>
       <div class="salary-row">
         <div class="salary-lbl">ينزل كل شهر يوم:</div>
         <select class="salary-day-select" id="salaryDaySelect" onchange="setSalaryDay(this.value)">
@@ -573,7 +601,7 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
   <!-- STREAK -->
   <div class="streak-wrap">
     <div class="streak-header">
-      <div class="streak-title">سلسلة المتابعة اليومية</div>
+      <div><div class="streak-title">سلسلة المتابعة اليومية</div><div class="sect-sub" style="color:#9a8878;font-size:10px;margin-top:2px;">سجّل حضورك كل يوم وابني سلسلتك — مثل سناب!</div></div>
       <div class="streak-flame">🔥</div>
     </div>
     <div class="streak-count-wrap">
@@ -600,22 +628,26 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
     <div class="sc sav"><div class="sct"><div class="sci">🏦</div><span class="sc-badge" style="background:rgba(86,28,36,.18);color:#C7B7A3" id="savB"></span></div><div class="sc-lbl">كم وفرت؟</div><div class="sc-num" id="tSav">٠ ﷼</div></div>
     <div class="sc bal"><div class="sct"><div class="sci">⚖️</div></div><div class="sc-lbl">باقيلك</div><div class="sc-num" id="tBal">٠ ﷼</div><div class="sc-sub" id="balS"></div></div>
   </div>
-  <div class="bpw"><div class="bph"><div class="bpt">📊 كم أكلت من ميزانيتك؟</div><div class="bpp" id="bpP">٠%</div></div><div class="bptrack"><div class="bpfill" id="bpF" style="width:0%"></div></div><div class="bplbls"><span id="spL">صرفت: ٠ ﷼</span><span id="bdL">دخلك: ٠ ﷼</span></div></div>
+  <div class="bpw"><div class="bph"><div><div class="bpt">📊 كم أكلت من ميزانيتك؟</div><div class="sect-sub" style="color:#9a8878;font-size:9px;margin-top:1px;">نسبة المصاريف من إجمالي دخلك هذا الشهر</div></div><div class="bpp" id="bpP">٠%</div></div><div class="bptrack"><div class="bpfill" id="bpF" style="width:0%"></div></div><div class="bplbls"><span id="spL">صرفت: ٠ ﷼</span><span id="bdL">دخلك: ٠ ﷼</span></div></div>
   <div class="tip-bar"><span style="font-size:18px">💡</span><div class="tip-text" id="tipT"></div><button class="tip-next" onclick="nextTip()">نصيحة ثانية ›</button></div>
   <div class="srch"><div class="srch-row"><span style="font-size:14px">🔍</span><input class="srch-inp" id="srchI" placeholder="دور على أي معاملة..." oninput="doSearch(this.value)"><button style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:13px" onclick="clearSrch()">✕</button></div><div class="srch-res" id="srchR" style="display:none"></div></div>
   <div class="two-col">
-    <div class="sec-card"><div class="sech"><div class="sect">💵 وش مصادر دخلك؟</div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="incT">٠ ﷼</span><button class="add-btn" onclick="tF('fI')">+ أضف</button></div></div><div class="items" id="incL"></div><div class="add-form" id="fI"><div class="form-row"><input class="fi" id="iN" placeholder="مثل: راتب، شغل حر..." type="text"><input class="fi" id="iA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="iC"><option value="💼">💼 راتب</option><option value="💻">💻 شغل حر</option><option value="🏪">🏪 تجارة</option><option value="📦">📦 استثمار</option><option value="🎁">🎁 هدية</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('income')">سجّل</button></div><label class="fchk"><input type="checkbox" id="iR"> كرره كل شهر 🔄</label></div></div>
-    <div class="sec-card"><div class="sech"><div class="sect">🏠 مصاريف ثابتة</div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="fixT">٠ ﷼</span><button class="add-btn" onclick="tF('fFx')">+ أضف</button></div></div><div class="items" id="fixL"></div><div class="add-form" id="fFx"><div class="form-row"><input class="fi" id="fxN" placeholder="مثل: إيجار، نت، سيارة..." type="text"><input class="fi" id="fxA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="fxC"><option value="🏠">🏠 إيجار</option><option value="💡">💡 كهرباء/ماء</option><option value="📱">📱 جوال/نت</option><option value="🚗">🚗 سيارة</option><option value="📚">📚 دراسة</option><option value="🏦">🏦 قسط</option><option value="📺">📺 اشتراكات</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('fixed')">سجّل</button></div><label class="fchk"><input type="checkbox" id="fxR" checked> كرره كل شهر 🔄</label></div></div>
+    <div class="sec-card"><div class="sech"><div><div class="sect">💵 وش مصادر دخلك؟</div><div class="sect-sub">راتب، شغل حر، تجارة، أي مبلغ يدخل عليك</div></div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="incT">٠ ﷼</span><button class="add-btn" onclick="tF('fI')">+ أضف</button></div></div><div class="items" id="incL"></div><div class="add-form" id="fI"><div class="form-row"><input class="fi" id="iN" placeholder="مثل: راتب، شغل حر..." type="text"><input class="fi" id="iA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="iC"><option value="💼">💼 راتب</option><option value="💻">💻 شغل حر</option><option value="🏪">🏪 تجارة</option><option value="📦">📦 استثمار</option><option value="🎁">🎁 هدية</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('income')">سجّل</button></div><label class="fchk"><input type="checkbox" id="iR"> كرره كل شهر 🔄</label></div></div>
+    <div class="sec-card"><div class="sech"><div><div class="sect">🏠 مصاريف ثابتة</div><div class="sect-sub">مبالغ ما تتغير — إيجار، قسط، اشتراكات</div></div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="fixT">٠ ﷼</span><button class="add-btn" onclick="tF('fFx')">+ أضف</button></div></div><div class="items" id="fixL"></div><div class="add-form" id="fFx"><div class="form-row"><input class="fi" id="fxN" placeholder="مثل: إيجار، نت، سيارة..." type="text"><input class="fi" id="fxA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="fxC"><option value="🏠">🏠 إيجار</option><option value="💡">💡 كهرباء/ماء</option><option value="📱">📱 جوال/نت</option><option value="🚗">🚗 سيارة</option><option value="📚">📚 دراسة</option><option value="🏦">🏦 قسط</option><option value="📺">📺 اشتراكات</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('fixed')">سجّل</button></div><label class="fchk"><input type="checkbox" id="fxR" checked> كرره كل شهر 🔄</label></div></div>
   </div>
   <div class="two-col">
-    <div class="sec-card"><div class="sech"><div class="sect">🛒 مصاريف متغيرة</div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="varT">٠ ﷼</span><button class="add-btn" onclick="tF('fV')">+ أضف</button></div></div><div class="items" id="varL"></div><div class="add-form" id="fV"><div class="form-row"><input class="fi" id="vN" placeholder="مثل: أكل، ملابس، قهوة..." type="text"><input class="fi" id="vA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="vC"><option value="🛒">🛒 بقالة</option><option value="🍽️">🍽️ مطاعم/قهوة</option><option value="👗">👗 ملابس</option><option value="💄">💄 عناية</option><option value="🎮">🎮 ترفيه</option><option value="✈️">✈️ سفريات</option><option value="🏥">🏥 صحة</option><option value="🎁">🎁 هدايا</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('var')">سجّل</button></div></div></div>
-    <div class="sec-card"><div class="sech"><div class="sect">🎯 أهدافك المالية</div><button class="add-btn" onclick="tF('fG')">+ هدف جديد</button></div><div id="goalL"></div><div class="add-form" id="fG"><div class="form-row"><input class="fi" id="gN" placeholder="وش تبي توفر له؟" type="text"><input class="fi" id="gT" placeholder="المبلغ المستهدف" type="number" min="0"><input class="fi" id="gS" placeholder="كم وفرت لحد الآن" type="number" min="0"><select class="fs" id="gI"><option value="✈️">✈️ سفريات</option><option value="🚗">🚗 سيارة</option><option value="🏠">🏠 بيت</option><option value="💍">💍 زواج</option><option value="📱">📱 جهاز</option><option value="🎓">🎓 دراسة</option><option value="🆘">🆘 طوارئ</option><option value="⭐">⭐ غير ذلك</option></select><button class="fb2" onclick="addGoal()">سجّل</button></div></div></div>
+    <div class="sec-card"><div class="sech"><div><div class="sect">📝 وش شريت اليوم؟</div><div class="sect-sub">سجّل مشترياتك اليومية — تتجمع تلقائياً مع نهاية الشهر</div></div><div style="display:flex;gap:6px;align-items:center"><span class="sec-tot" style="color:#C7B7A3" id="varT">٠ ﷼</span><button class="add-btn" onclick="tF('fV')">+ أضف</button></div></div><div class="items" id="varL"></div><div class="add-form" id="fV"><div class="form-row"><input class="fi" id="vN" placeholder="مثل: غداء، قهوة، ملابس..." type="text"><input class="fi" id="vA" placeholder="الرقم ﷼" type="number" min="0"><select class="fs" id="vC"><option value="🛒">🛒 بقالة</option><option value="🍽️">🍽️ مطاعم/قهوة</option><option value="👗">👗 ملابس</option><option value="💄">💄 عناية</option><option value="🎮">🎮 ترفيه</option><option value="✈️">✈️ سفريات</option><option value="🏥">🏥 صحة</option><option value="🎁">🎁 هدايا</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addItem('var')">سجّل</button></div></div></div>
+    <div class="sec-card"><div class="sech"><div><div class="sect">🎯 أهدافك المالية</div><div class="sect-sub">حدد هدف وتابع كم وفّرت له — سفر، سيارة، زواج</div></div><button class="add-btn" onclick="tF('fG')">+ هدف جديد</button></div><div id="goalL"></div><div class="add-form" id="fG"><div class="form-row"><input class="fi" id="gN" placeholder="وش تبي توفر له؟" type="text"><input class="fi" id="gT" placeholder="المبلغ المستهدف" type="number" min="0"><input class="fi" id="gS" placeholder="كم وفرت لحد الآن" type="number" min="0"><select class="fs" id="gI"><option value="✈️">✈️ سفريات</option><option value="🚗">🚗 سيارة</option><option value="🏠">🏠 بيت</option><option value="💍">💍 زواج</option><option value="📱">📱 جهاز</option><option value="🎓">🎓 دراسة</option><option value="🆘">🆘 طوارئ</option><option value="⭐">⭐ غير ذلك</option></select><button class="fb2" onclick="addGoal()">سجّل</button></div></div></div>
   </div>
+
+
+  <!-- BUDGET ALERT BANNER -->
+  <div class="budget-alert-banner" id="budgetAlertBanner"></div>
 
   <!-- BUDGET CATEGORIES -->
   <div class="budgets-wrap">
     <div class="budgets-header">
-      <div class="budgets-title">🎯 ميزانية الفئات</div>
+      <div><div class="budgets-title">🎯 ميزانية الفئات</div><div class="sect-sub" style="color:#9a8878;font-size:10px;margin-top:2px;">حدد سقف لكل فئة وتابع كم صرفت منها خلال الشهر</div></div>
       <button class="add-btn" onclick="tF('fBudget')">+ فئة جديدة</button>
     </div>
     <div class="budget-add-form" id="fBudget">
@@ -642,11 +674,11 @@ body{font-family:'Flounce','Cairo','Arial',sans-serif;background:var(--navy);col
     </div>
   </div>
 
-  <div class="ach-sec"><div class="ach-title">🏆 وش اللي حققته؟</div><div class="ach-grid" id="achG"></div></div>
-  <div class="daily-sec"><div class="sech" style="margin-bottom:11px"><div class="sect">📅 وش صرفت اليوم؟</div><div style="font-size:9px;color:var(--gray)">اضغط على اليوم وسجّل</div></div><div class="dgrid" id="dGrid"></div><div class="dlog" id="dLog" style="display:none"><div class="dlog-t" id="dLogT"></div><div class="dlog-entries" id="dLogE"></div><div class="form-row"><input class="fi" id="dlN" placeholder="وش صرفت على؟" type="text"><input class="fi" id="dlA" placeholder="المبلغ" type="number" min="0"><select class="fs" id="dlT"><option value="out">💸 صرفت</option><option value="in">💵 دخل</option></select><select class="fs" id="dlC"><option value="🛒">🛒 بقالة</option><option value="🍽️">🍽️ مطعم</option><option value="🚗">🚗 مواصلات</option><option value="💄">💄 عناية</option><option value="🎮">🎮 ترفيه</option><option value="🏥">🏥 صحة</option><option value="💡">💡 فواتير</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addDE()">سجّل</button></div></div></div>
+  <div class="ach-sec"><div><div class="ach-title">🏆 وش اللي حققته؟</div><div class="sect-sub" style="color:#9a8878;font-size:10px;margin-top:2px;">شارات تكتسبها كل ما حققت هدفاً مالياً</div></div><div class="ach-grid" id="achG"></div></div>
+  <div class="daily-sec"><div class="sech" style="margin-bottom:11px"><div><div class="sect">📅 وش صرفت اليوم؟</div><div class="sect-sub">سجّل أي مصروف أو دخل يومي بالضغط على اليوم</div></div><div style="font-size:9px;color:var(--gray)">اضغط على اليوم وسجّل</div></div><div class="dgrid" id="dGrid"></div><div class="dlog" id="dLog" style="display:none"><div class="dlog-t" id="dLogT"></div><div class="dlog-entries" id="dLogE"></div><div class="form-row"><input class="fi" id="dlN" placeholder="وش صرفت على؟" type="text"><input class="fi" id="dlA" placeholder="المبلغ" type="number" min="0"><select class="fs" id="dlT"><option value="out">💸 صرفت</option><option value="in">💵 دخل</option></select><select class="fs" id="dlC"><option value="🛒">🛒 بقالة</option><option value="🍽️">🍽️ مطعم</option><option value="🚗">🚗 مواصلات</option><option value="💄">💄 عناية</option><option value="🎮">🎮 ترفيه</option><option value="🏥">🏥 صحة</option><option value="💡">💡 فواتير</option><option value="➕">➕ غير ذلك</option></select><button class="fb2" onclick="addDE()">سجّل</button></div></div></div>
   <div class="charts-grid">
-    <div class="chart-card"><div class="chart-t">🥧 وين راحت فلوسك؟</div><div class="pie-wrap"><svg width="88" height="88" viewBox="0 0 100 100" id="pieC" style="flex-shrink:0"></svg><div class="pie-leg" id="pieL"></div></div></div>
-    <div class="chart-card"><div class="chart-t">📊 هذا الشهر مقابل اللي قبله</div><div id="cmpC"></div></div>
+    <div class="chart-card"><div><div class="chart-t">🥧 وين راحت فلوسك؟</div><div class="sect-sub" style="color:#9a8878;font-size:9px;margin-top:1px;margin-bottom:8px;">توزيع مصاريفك الشهرية بالنسب المئوية</div></div><div class="pie-wrap"><svg width="88" height="88" viewBox="0 0 100 100" id="pieC" style="flex-shrink:0"></svg><div class="pie-leg" id="pieL"></div></div></div>
+    <div class="chart-card"><div><div class="chart-t">📊 هذا الشهر مقابل اللي قبله</div><div class="sect-sub" style="color:#9a8878;font-size:9px;margin-top:1px;margin-bottom:8px;">قارن دخلك ومصاريفك مع الشهر السابق</div></div><div id="cmpC"></div></div>
   </div>
 </div>
 <div id="vY" style="display:none">
@@ -1292,6 +1324,7 @@ function renderBudgets(){
   if(!el) return;
   if(!budgets.length){
     el.innerHTML = '<div class="budget-empty">ما عندك فئات بعد — أضف فئة وحدد ميزانيتها 💡</div>';
+    checkBudgetAlerts();
     return;
   }
   var h = '';
@@ -1321,6 +1354,56 @@ function renderBudgets(){
     h += '</div>';
   });
   el.innerHTML = h;
+  checkBudgetAlerts();
+}
+
+function checkBudgetAlerts(){
+  var budgets = getBudgets();
+  var banner  = document.getElementById('budgetAlertBanner');
+  if(!banner) return;
+  var alerts  = [];
+  budgets.forEach(function(b){
+    var spent = getSpentInCat(b.name);
+    var pct   = b.limit ? Math.round((spent/b.limit)*100) : 0;
+    var over  = spent - b.limit;
+    if(pct >= 100){
+      alerts.push({
+        icon: '🚨',
+        title: 'تجاوزت ميزانية ' + b.name,
+        msg: 'صرفت ' + fmt(spent) + ' ﷼ من أصل ' + fmt(b.limit) + ' ﷼ — تجاوزت بـ ' + fmt(over) + ' ﷼'
+      });
+    } else if(pct >= 80){
+      alerts.push({
+        icon: '⚠️',
+        title: 'تحذير: ' + b.name + ' وصلت ' + pct + '%',
+        msg: 'باقي ' + fmt(b.limit - spent) + ' ﷼ فقط من ميزانية ' + b.name
+      });
+    }
+  });
+  if(!alerts.length){
+    banner.classList.remove('show');
+    banner.innerHTML = '';
+    return;
+  }
+  var h = '';
+  alerts.forEach(function(a){
+    h += '<div class="budget-alert-item">';
+    h +=   '<div class="budget-alert-icon">' + a.icon + '</div>';
+    h +=   '<div class="budget-alert-text"><b>' + a.title + '</b>' + a.msg + '</div>';
+    h += '</div>';
+  });
+  banner.innerHTML = h;
+  banner.classList.add('show');
+  // Show toast for new over-budget
+  alerts.forEach(function(a){
+    if(a.icon === '🚨'){
+      var key = 'alert_shown_' + cy + '_' + cm + '_' + a.title;
+      if(!sessionStorage.getItem(key)){
+        sessionStorage.setItem(key, '1');
+        toast(a.title + ' 🚨', 'danger');
+      }
+    }
+  });
 }
 
 
