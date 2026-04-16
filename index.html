@@ -528,6 +528,24 @@ body::before {
   margin-top: 2px;
 }
 
+/* Greeting */
+.greeting-card {
+  padding: var(--s-3) var(--s-4) 0;
+  margin-bottom: var(--s-3);
+}
+.greeting-hello {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.5px;
+  line-height: 1.2;
+}
+.greeting-sub {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
 /* Bank card */
 .bank-card {
   background: linear-gradient(145deg, #0d0d0d, #1a1400);
@@ -2157,6 +2175,13 @@ body::before {
 
     <!-- ═══ MONTHLY TAB ═══ -->
     <div class="tab-content" id="tab-monthly">
+      <!-- Greeting -->
+      <div class="greeting-card" id="greetingCard">
+        <div class="greeting-text">
+          <div class="greeting-hello" id="greetingHello">مرحباً 👋</div>
+          <div class="greeting-sub" id="greetingSub">يومك سعيد ومبارك</div>
+        </div>
+      </div>
       <!-- Bank card -->
       <div class="bank-card">
         <div class="bank-top">
@@ -2640,6 +2665,17 @@ body::before {
 
     <!-- ═══ SETTINGS TAB ═══ -->
     <div class="tab-content" id="tab-settings" style="display:none">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">👤 اسمك</div>
+          <div class="card-sub">سيظهر في صفحة الترحيب</div>
+        </div>
+        <div class="form-row">
+          <input type="text" class="input" id="userNameInput" placeholder="اكتب اسمك هنا..." maxlength="30">
+          <button class="btn-primary" id="saveUserNameBtn">حفظ</button>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px" id="currentUserName"></div>
+      </div>
       <div class="card">
         <div class="card-head">
           <div class="card-title">🎨 الثيم</div>
@@ -3244,6 +3280,7 @@ const App = (() => {
     customCats: [],
     theme: 'default',
     achievements: [],
+    userName: '',
     // UI state
     year: new Date().getFullYear(),
     month: new Date().getMonth(),
@@ -3846,6 +3883,32 @@ const Renderers = (() => {
 const { Logger, U, Fmt, Scheduler, DOM, $, $$,
 MONTHS, DAY_NAMES, TIPS, ACHIEVEMENTS, PIE_COLORS } = Tadbeer;
 const { store, Sel, Pts, Streak, Budgets, Notifs, AI, Zakat, Salary, Search } = App;
+
+// ═══ GREETING ═══
+function greeting() {
+const name = (store.get(‘userName’) || ‘’).trim();
+const hour = new Date().getHours();
+let timeGreeting;
+if (hour >= 5 && hour < 12) timeGreeting = ‘صباح الخير’;
+else if (hour >= 12 && hour < 17) timeGreeting = ‘مساء النور’;
+else if (hour >= 17 && hour < 22) timeGreeting = ‘مساء الخير’;
+else timeGreeting = ‘ليلة سعيدة’;
+
+```
+const hello = name ? `مرحباً ${name} 👋` : `${timeGreeting} 👋`;
+
+const t = Sel.totals(store.get('year'), store.get('month'));
+let sub;
+if (!t.income && !t.expense) sub = 'ابدأ بإضافة دخلك أو مصاريفك ✨';
+else if (t.save >= 0 && t.savePct >= 20) sub = `ممتاز! وفّرت ${t.savePct}٪ هذا الشهر 🌟`;
+else if (t.save < 0) sub = 'انتبه — مصاريفك تجاوزت دخلك ⚠️';
+else sub = `${timeGreeting}${name ? '' : '!'} يومك سعيد ومبارك`;
+
+DOM.setText($('#greetingHello'), hello);
+DOM.setText($('#greetingSub'), sub);
+```
+
+}
 
 // ═══ BANK CARD ═══
 function bankCard() {
@@ -4594,6 +4657,7 @@ DOM.setText($(’#monthLbl’), `${MONTHS[m]} ${y}`);
 
 ```
 if (tab === 'monthly') {
+  greeting();
   bankCard();
   summary();
   income();
@@ -4618,7 +4682,7 @@ notifBell();
 
 const scheduledAll = () => Scheduler.schedule(all);
 
-return { all, scheduledAll, bankCard, summary, income, fixed, variable,
+return { all, scheduledAll, greeting, bankCard, summary, income, fixed, variable,
 goals, budgets, streak, ai, leaks, savingPlan, pts, achievements,
 periodChart, salary, notifBell, notifPanel, yearly, nisab };
 })();
@@ -5094,6 +5158,40 @@ DOM.h(‘td’, { class: r.cls }, Fmt.c(r.amt))
 }
 }
 
+// ═══ USER NAME ═══
+function bindUserName() {
+const input = $(’#userNameInput’);
+const btn = $(’#saveUserNameBtn’);
+const current = $(’#currentUserName’);
+
+```
+// Reflect saved name into input on settings open
+const refresh = () => {
+  const name = (store.get('userName') || '').trim();
+  if (input) input.value = name;
+  if (current) {
+    current.textContent = name ? `الاسم الحالي: ${name}` : 'لم تضف اسماً بعد';
+  }
+};
+refresh();
+
+// Update whenever userName changes
+store.subscribe('userName', refresh);
+
+btn?.addEventListener('click', () => {
+  const name = U.str(input?.value || '', 30);
+  store.set('userName', name);
+  Toast.show(name ? `تم حفظ اسمك: ${name} ✅` : 'تم مسح الاسم', 'success');
+  Renderers.scheduledAll();
+});
+
+input?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); btn?.click(); }
+});
+```
+
+}
+
 // ═══ DATA: backup, restore, clear ═══
 function bindData() {
 $(’#backupBtn’)?.addEventListener(‘click’, () => {
@@ -5107,6 +5205,7 @@ notifs: snapshot.notifs,
 customCats: snapshot.customCats,
 theme: snapshot.theme,
 achievements: snapshot.achievements,
+userName: snapshot.userName,
 __version: 2,
 __exportedAt: new Date().toISOString()
 };
@@ -5135,6 +5234,7 @@ $('#restoreInput')?.addEventListener('change', (e) => {
       store.set('notifs', Array.isArray(data.notifs) ? data.notifs : []);
       store.set('theme', data.theme || 'default');
       store.set('achievements', Array.isArray(data.achievements) ? data.achievements : []);
+      store.set('userName', U.str(data.userName || '', 30));
       Theme.apply(store.get('theme'));
       store.set('dirty', true);
       Toast.show('تم الاستعادة ✅', 'success');
@@ -5149,7 +5249,7 @@ $('#restoreInput')?.addEventListener('change', (e) => {
 $('#clearBtn')?.addEventListener('click', () => {
   if (!confirm('سيتم حذف كل البيانات نهائياً. متأكد؟')) return;
   if (!confirm('تأكيد نهائي: كل شيء سيُمسح!')) return;
-  ['data','pts','salaryDay','streak','notifs','customCats','theme','achievements'].forEach(k => {
+  ['data','pts','salaryDay','streak','notifs','customCats','theme','achievements','userName'].forEach(k => {
     Tadbeer.Storage.remove(k);
   });
   location.reload();
@@ -5212,6 +5312,7 @@ bindSalary();
 bindSavingSlider();
 bindExports();
 bindData();
+bindUserName();
 
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
@@ -5253,6 +5354,7 @@ store.set(‘data’, data);
   store.set('customCats', Storage.load('customCats', []));
   store.set('theme', Storage.load('theme', 'default'));
   store.set('achievements', Storage.load('achievements', []));
+  store.set('userName', Tadbeer.U.str(Storage.load('userName', ''), 30));
 
   Theme.apply(store.get('theme'));
   // Set theme swatch visual
@@ -5270,7 +5372,7 @@ store.set(‘data’, data);
 
 // ── Subscribe persistence (debounced) ──
 function bindPersistence() {
-const saveKeys = [‘data’, ‘pts’, ‘salaryDay’, ‘streak’, ‘notifs’, ‘customCats’, ‘theme’, ‘achievements’];
+const saveKeys = [‘data’, ‘pts’, ‘salaryDay’, ‘streak’, ‘notifs’, ‘customCats’, ‘theme’, ‘achievements’, ‘userName’];
 for (const key of saveKeys) {
 store.subscribe(key, (val) => {
 Storage.saveDebounced(key, val);
