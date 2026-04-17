@@ -3920,45 +3920,6 @@ body::before {
   color:var(--text2);
 }
 
-/* ═══ TTS Toggle ═══ */
-.tts-toggle{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:var(--s-3);
-  background:var(--bg3);
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:var(--s-2);
-  cursor:pointer;
-}
-.tts-toggle-left{display:flex;align-items:center;gap:var(--s-2);flex:1}
-.tts-toggle-icon{font-size:22px}
-.tts-toggle-text{font-size:13px;font-weight:600;color:var(--text)}
-.tts-toggle-desc{font-size:11px;color:var(--text3);margin-top:1px}
-.tts-switch{
-  width:46px;height:26px;
-  background:var(--bg5);
-  border-radius:13px;
-  position:relative;
-  transition:background var(--t-med);
-  flex-shrink:0;
-}
-.tts-switch::after{
-  content:'';
-  position:absolute;
-  top:3px;right:3px;
-  width:20px;height:20px;
-  background:var(--text3);
-  border-radius:50%;
-  transition:all var(--t-med);
-}
-.tts-switch.on{background:var(--accent-dim);border:1px solid var(--accent-bd)}
-.tts-switch.on::after{
-  background:var(--accent);
-  right:calc(100% - 23px);
-}
-
 </style>
 </head>
 <body>
@@ -4733,18 +4694,6 @@ body::before {
           <div class="smart-tool-icon">🎙️</div>
           <div class="smart-tool-label">سجّل<br>بصوتك</div>
         </button>
-      </div>
-      
-      <!-- TTS Toggle -->
-      <div class="tts-toggle" id="ttsToggleWrap" role="switch" tabindex="0">
-        <div class="tts-toggle-left">
-          <div class="tts-toggle-icon">🔊</div>
-          <div>
-            <div class="tts-toggle-text">التطبيق يتكلم معك</div>
-            <div class="tts-toggle-desc">يقرأ الرسائل والتنبيهات بصوت عالٍ</div>
-          </div>
-        </div>
-        <div class="tts-switch" id="ttsSwitch"></div>
       </div>
       
       <div class="card">
@@ -9396,13 +9345,6 @@ const Bot = (() => {
       isBot: true
     });
 
-    // قراءة الرد صوتياً لو TTS مفعّل
-    try {
-      if (window.SmartFeatures && window.SmartFeatures.TTS && window.SmartFeatures.TTS.isEnabled()) {
-        window.SmartFeatures.TTS.speak(response);
-      }
-    } catch {}
-
     // أظهر اقتراحات جديدة أحياناً
     if (state.messages.length < 8) {
       setTimeout(renderSuggestions, 200);
@@ -10125,84 +10067,6 @@ const SmartFeatures = (() => {
     return { open, close, toggle, confirm, reset, isSupported };
   })();
 
-  // ═══ 4. TEXT-TO-SPEECH ═══
-  const TTS = (() => {
-    let enabled = false;
-    let voice = null;
-    
-    function init() {
-      try {
-        enabled = Storage.load('ttsEnabled', false);
-        updateSwitch();
-        
-        // حاول اختيار صوت عربي (Safari قد يفشل هنا)
-        if ('speechSynthesis' in window) {
-          try {
-            const setVoice = () => {
-              try {
-                const voices = speechSynthesis.getVoices();
-                if (voices && voices.length) {
-                  voice = voices.find(v => v.lang && v.lang.startsWith('ar')) || voices[0];
-                }
-              } catch {}
-            };
-            try { speechSynthesis.onvoiceschanged = setVoice; } catch {}
-            setVoice();
-          } catch {}
-        }
-      } catch (e) { console.warn('TTS.init:', e.message); }
-    }
-    
-    function isSupported() {
-      return 'speechSynthesis' in window;
-    }
-    
-    function toggle() {
-      enabled = !enabled;
-      Storage.save('ttsEnabled', enabled);
-      updateSwitch();
-      
-      if (enabled) {
-        Toast.show('🔊 التطبيق يتكلم الآن', 'success');
-        speak('أهلاً بك! أصبحت أتكلم معك الآن.');
-      } else {
-        Toast.show('🔇 الصوت متوقف', 'warn');
-        if (speechSynthesis.speaking) speechSynthesis.cancel();
-      }
-    }
-    
-    function updateSwitch() {
-      const sw = $('#ttsSwitch');
-      if (sw) sw.classList.toggle('on', enabled);
-    }
-    
-    function speak(text) {
-      if (!enabled || !isSupported()) return;
-      if (!text) return;
-      
-      // إزالة الرموز التعبيرية والتنسيق
-      const clean = text.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{27BF}]/gu, '')
-                        .replace(/\*\*/g, '')
-                        .replace(/\n+/g, '. ')
-                        .trim();
-      if (!clean) return;
-      
-      try {
-        speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(clean);
-        utter.lang = 'ar-SA';
-        utter.rate = 0.95;
-        utter.pitch = 1.05;
-        if (voice) utter.voice = voice;
-        speechSynthesis.speak(utter);
-      } catch (e) { Logger.warn('TTS.speak', e.message); }
-    }
-    
-    function isEnabled() { return enabled; }
-    
-    return { init, toggle, speak, isEnabled, isSupported };
-  })();
-
   // ═══ EVENTS BINDING ═══
   function bindEvents() {
     // Gift
@@ -10235,9 +10099,6 @@ const SmartFeatures = (() => {
       if (e.target.id === 'voiceOverlay') Voice.close();
     });
 
-    // TTS Toggle
-    $('#ttsToggleWrap')?.addEventListener('click', TTS.toggle);
-
     // ESC key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
@@ -10250,14 +10111,13 @@ const SmartFeatures = (() => {
 
   function init() {
     try { bindEvents(); } catch (e) { console.warn('SmartFeatures.bindEvents failed:', e.message); }
-    try { TTS.init(); } catch (e) { console.warn('TTS.init failed:', e.message); }
     // تحقق من توفر الهدية بعد تحميل DOM
     try { setTimeout(() => { try { Gift.checkAvailability(); } catch {} }, 500); } catch {}
     // افحص كل دقيقة
     try { setInterval(() => { try { Gift.checkAvailability(); } catch {} }, 60000); } catch {}
   }
 
-  return { init, Gift, Simulator, Voice, TTS };
+  return { init, Gift, Simulator, Voice };
 })();
 
 window.SmartFeatures = SmartFeatures;
@@ -10406,7 +10266,7 @@ window.SmartFeatures = SmartFeatures;
         }
       } catch (e) { Logger.warn('Bootstrap.Bot', e.message); }
 
-      // Smart Features init (Gift, Simulator, Voice, TTS)
+      // Smart Features init (Gift, Simulator, Voice)
       try {
         if (typeof SmartFeatures !== 'undefined' && SmartFeatures.init) {
           SmartFeatures.init();
