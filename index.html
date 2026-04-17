@@ -10270,18 +10270,26 @@ let voice = null;
 
 ```
 function init() {
-  enabled = Storage.load('ttsEnabled', false);
-  updateSwitch();
-  
-  // حاول اختيار صوت عربي
-  if ('speechSynthesis' in window) {
-    const setVoice = () => {
-      const voices = speechSynthesis.getVoices();
-      voice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
-    };
-    speechSynthesis.onvoiceschanged = setVoice;
-    setVoice();
-  }
+  try {
+    enabled = Storage.load('ttsEnabled', false);
+    updateSwitch();
+    
+    // حاول اختيار صوت عربي (Safari قد يفشل هنا)
+    if ('speechSynthesis' in window) {
+      try {
+        const setVoice = () => {
+          try {
+            const voices = speechSynthesis.getVoices();
+            if (voices && voices.length) {
+              voice = voices.find(v => v.lang && v.lang.startsWith('ar')) || voices[0];
+            }
+          } catch {}
+        };
+        try { speechSynthesis.onvoiceschanged = setVoice; } catch {}
+        setVoice();
+      } catch {}
+    }
+  } catch (e) { console.warn('TTS.init:', e.message); }
 }
 
 function isSupported() {
@@ -10385,12 +10393,12 @@ document.addEventListener('keydown', (e) => {
 }
 
 function init() {
-bindEvents();
-TTS.init();
+try { bindEvents(); } catch (e) { console.warn(‘SmartFeatures.bindEvents failed:’, e.message); }
+try { TTS.init(); } catch (e) { console.warn(‘TTS.init failed:’, e.message); }
 // تحقق من توفر الهدية بعد تحميل DOM
-setTimeout(() => Gift.checkAvailability(), 500);
+try { setTimeout(() => { try { Gift.checkAvailability(); } catch {} }, 500); } catch {}
 // افحص كل دقيقة
-setInterval(() => Gift.checkAvailability(), 60000);
+try { setInterval(() => { try { Gift.checkAvailability(); } catch {} }, 60000); } catch {}
 }
 
 return { init, Gift, Simulator, Voice, TTS };
@@ -10534,20 +10542,26 @@ store.set(‘initialized’, true);
 
 ```
   // Social init (waits for fb-ready event internally)
-  if (typeof Social !== 'undefined' && Social.bindEvents) {
-    Social.bindEvents();
-    Social.init();
-  }
+  try {
+    if (typeof Social !== 'undefined' && Social.bindEvents) {
+      Social.bindEvents();
+      Social.init();
+    }
+  } catch (e) { Logger.warn('Bootstrap.Social', e.message); }
 
   // Bot init
-  if (typeof Bot !== 'undefined' && Bot.init) {
-    Bot.init();
-  }
+  try {
+    if (typeof Bot !== 'undefined' && Bot.init) {
+      Bot.init();
+    }
+  } catch (e) { Logger.warn('Bootstrap.Bot', e.message); }
 
   // Smart Features init (Gift, Simulator, Voice, TTS)
-  if (typeof SmartFeatures !== 'undefined' && SmartFeatures.init) {
-    SmartFeatures.init();
-  }
+  try {
+    if (typeof SmartFeatures !== 'undefined' && SmartFeatures.init) {
+      SmartFeatures.init();
+    }
+  } catch (e) { Logger.warn('Bootstrap.SmartFeatures', e.message); }
 
   // Tests
   if (new URLSearchParams(location.search).has('test')) {
